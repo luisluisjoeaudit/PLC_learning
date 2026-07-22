@@ -38,6 +38,6 @@ This repository documents my journey toward becoming an Instrumentation Technici
 | Conveyor Control 
 | Water Tank 
 | Elevator 
-| Pump Station | ⏳ |
+| Pump Station 
 
 This repository is continuously updated as I gain more experience with industrial automation.
