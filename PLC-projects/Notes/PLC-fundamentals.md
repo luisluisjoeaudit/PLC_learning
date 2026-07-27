@@ -1,3 +1,4 @@
+# Unit 1 
 # Lesson 1 - What is a PLC?
 
 ## Key Ideas
@@ -138,4 +139,86 @@ Example:
 
 ## My own explanation
 - Analog inputs/outputs operate as a dimmer rather than a set switch. Firstly, the analog sensor sends a small eletrical current to the PLC, that way it can show exact measurements it needs. Then, the PLC reads the exact live measurement for the machine, compares it with written instructions, and completes a math operation. After finding the final value, the PLC sends out a matching small eletrical current to control things precisely. 
+
+# Unit 2 
+# Lesson 1 Timers
+
+## Key Ideas
+- Timers allow a PLC program to delay actions, control step durations, or track total operating runtimes. 
+- Industrial systems rely on timers to synchronize multiple moving parts and prevent alarm chatter 
+- Every timer uses an internal memory block containing a specific preset target time and an accumulated value. 
+- Most modern control software utilizes standardized IEC timer function blocks for program development. 
+
+## Step 1
+- The upstream logic conditions on the ladder rung switch from a false state to a true state.
+- Power reaches the timer input, activating the block's internal enable (EN) bit flag.
+- The timer block begins tracking live elapsed time using its configured baseline time unit.
+- The active timing (TT) bit stays true while the clock numbers climb toward the setpoint.
+
+## Step 2
+- The accumulated counting value successfully climbs up until it matches the preset target value.
+- The clock stops counting, dropping the timing bit and triggering the block's done (DN) bit.
+- The true done bit passes electrical power forward down the rung to activate downstream code.
+- Turning off the upstream input instantly drops the tracking values back down to zero.
+
+## Variants
+- Special off-delay (TOF) configurations turn the done bit on immediately before starting the clock
+- Retentive timers (RTO) save their current counted value even if the incoming power drops out. 
+- Programmers must fire a dedicated reset instruction to clear a retentive timer back to zero.
+- Advanced tasks cascade multiple timer units together to alternate fluid pumps or mixing valves sequentiall.
+
+## My own explanation
+- Timers are used to caculate tasks before excuting the task. In short, when a condition is true, power is directed to the Timer. The timer begans counting down until it hits a preset value, and from there it turns a switch and changes a value to either a "1" or a "0". The PLC detects this and determines a way to excute a task. 
+
+# Lesson 2 Counters
+
+## Key Ideas
+-  Counters do not track clock time, instead they count physical pulses or event triggers. 
+- Industrial systems rely on counters to track production volume, pack boxes, or limit machine.  cycles.
+- Every counter uses an internal memory block containing a specific preset target value and an accumulated count.
+- Most modern control software utilizes standardized IEC counter function blocks (CTU, CTD, or CTUD).
+
+## Step 1
+- A proximity sensor or limit switch detects a physical part moving down the production line.
+- The sensor transitions from a false state to a true state, creating a rising edge pulse.
+- This sharp incoming pulse reaches the counter input, activating the block's counting logic.
+- The counter block increments or decrements its live internal value by exactly one count.
+
+## Step 2
+- The accumulated counting value successfully moves up or down until it matches the preset target value.
+- The block stops tracking the target and instantly updates its internal done (DN or Q) bit flag.
+- This value change turns a virtual switch inside the PLC memory from a "0" to a "1".
+- The true bit passes electrical power forward down the ladder rung to trigger the next execution task.
+
+## Variants
+- Special count-down (CTD) configurations subtract numbers from the current total every time a sensor trips.
+- Bi-directional counters (CTUD) use two separate inputs to count up for entries and count down for exits.
+- Unlike basic timers, standard counters hold their accumulated numbers tightly even if the rung loses power.
+- Programmers must fire a dedicated reset (RST) instruction to clear the accumulated value back to zero.
+
+## Reset (RES)Memory Retention: 
+
+Counters hold onto their accumulated numbers tightly even if the incoming rung power drops out.
+
+Instruction Trigger: 
+- Programmers must use a separate, dedicated Reset (RES) instruction block to clear the internal memory.
+
+ State Change:
+ - Activating the reset block instantly forces the accumulated value back to zero and drops the done bit from a "1" back to a "0"
+
+## Shared Memory Tag:
+ A Count-Up (CTU) and a Count-Down (CTD) block can be paired together by assigning them the exact same name or tag in the software code.
+ 
+ Shared Values:
+ -  Paired blocks share the exact same preset value, accumulated value, and done bit output behind the scenes.
+ 
+ Bidirectional Tracking: 
+ - Tripping the CTU input adds 1 to the shared total, while tripping the CTD input subtracts 1 from that same total, allowing the PLC to track entries and exits seamlessly.
+
+
+## My own explanation
+- Counters "count" how many items there are using sensors, unlike a Timer which times everything automatically. The Counter first detects the object, it changes the accumulated value by 1. When it reaches a preset value, the Counter sends out a value of either "1" or a "0" to the PLC. From there, the PLC decides what the following action should be pursued. 
+
+
+
 
