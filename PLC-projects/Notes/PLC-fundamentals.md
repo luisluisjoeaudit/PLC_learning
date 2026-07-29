@@ -1,3 +1,10 @@
+Notes will be in the following format: 
+
+What is it?
+Why is it used in industry?
+Where would I see it?
+How does it connect to a PLC?
+
 # Unit 1 
 # Lesson 1 - What is a PLC?
 
@@ -219,6 +226,223 @@ Instruction Trigger:
 ## My own explanation
 - Counters "count" how many items there are using sensors, unlike a Timer which times everything automatically. The Counter first detects the object, it changes the accumulated value by 1. When it reaches a preset value, the Counter sends out a value of either "1" or a "0" to the PLC. From there, the PLC decides what the following action should be pursued. 
 
+# Unit 3 
+# Analog Inputs and Signals
 
+## What is an Analog Signal?
 
+- An analog signal is a continuous signal that can have many different values.
+- Unlike digital signals (ON/OFF), analog signals represent changing measurements.
+- PLCs use analog signals to measure real-world conditions.
 
+Examples:
+- Temperature
+- Pressure
+- Flow
+- Level
+- Speed
+
+---
+
+## Digital vs Analog Signals
+
+### Digital Signal
+- Only has two states:
+  - ON (1)
+  - OFF (0)
+
+Examples:
+- Push buttons
+- Limit switches
+- Proximity sensors
+
+### Analog Signal
+- Has a range of values.
+- Represents a measurement.
+
+Examples:
+- Temperature = 0°C to 100°C
+- Pressure = 0 psi to 100 psi
+- Level = 0% to 100%
+
+---
+
+## Common Industrial Analog Signals
+
+### 4-20 mA
+
+- The most common industrial analog signal.
+- Used because it is reliable over long distances.
+- The PLC reads the current value and converts it into a measurement.
+
+Example:
+
+4 mA = 0%
+12 mA = 50%
+20 mA = 100%
+
+---
+
+## How Analog Inputs Work
+
+Process:
+
+Sensor → Analog Signal → PLC Analog Input → PLC Program → Output
+
+Example:
+
+Temperature transmitter:
+1. Measures temperature.
+2. Sends a 4-20 mA signal.
+3. PLC reads the signal.
+4. PLC controls a heater or fan.
+
+---
+
+## Analog Input vs Digital Input
+
+Digital Input:
+- Receives ON/OFF information.
+- Example: Is the button pressed?
+
+Analog Input:
+- Receives measurement values.
+- Example: What is the tank level?
+
+# Proximity Sensors
+
+## What is a Proximity Sensor?
+
+- A proximity sensor is an industrial sensor that detects the presence of an object without physical contact.
+- It sends a signal to a PLC when an object is detected.
+- It is commonly used in automation systems for object detection, positioning, counting, and safety.
+
+Basic operation:
+
+Object detected
+        ↓
+Sensor output changes state
+        ↓
+PLC input receives signal
+        ↓
+PLC logic controls output
+
+Example:
+A conveyor detects a metal part:
+- Sensor detects the part.
+- PLC receives an ON signal.
+- PLC stops the conveyor or activates another process.
+
+---
+
+# Types of Proximity Sensors
+
+## 1. Inductive Proximity Sensor
+
+### What does it detect?
+- Detects metal objects only.
+- Commonly detects:
+  - Steel
+  - Aluminum
+  - Copper
+
+### How does it work?
+- Creates an electromagnetic field.
+- When a metal object enters the sensing range, it changes the field.
+- The sensor detects this change and switches its output.
+
+### Advantages:
+- No physical contact required.
+- Very durable.
+- Works well in dirty industrial environments.
+- Long operating life.
+
+### Limitations:
+- Only detects metal objects.
+- Shorter sensing distance compared to some other sensors.
+
+### Industrial examples:
+- Detecting metal parts on conveyors.
+- Checking if a machine component is in position.
+- Counting metal products.
+
+---
+
+# 2. Capacitive Proximity Sensor
+
+### What does it detect?
+- Detects many different materials:
+  - Plastic
+  - Wood
+  - Glass
+  - Liquids
+  - Metal
+
+### How does it work?
+- Creates an electric field.
+- When an object enters the sensing area, it changes the capacitance.
+- The sensor detects the change and switches output.
+
+### Advantages:
+- Detects many materials.
+- Can detect objects through some non-metal containers.
+
+### Limitations:
+- More sensitive to environmental conditions.
+- Can detect unwanted materials if not adjusted properly.
+
+### Industrial examples:
+- Detecting liquid levels inside containers.
+- Detecting plastic products.
+- Detecting materials in packaging systems.
+
+---
+
+# Sensor Outputs
+
+Most industrial proximity sensors provide a digital signal:
+
+ON = Object detected
+OFF = No object detected
+
+This connects to a PLC digital input.
+
+Example:
+
+Sensor Output:
+OFF → PLC Input = 0
+ON → PLC Input = 1
+
+---
+
+# Wiring to PLC
+
+Typical connection:
+
+24V Power Supply
+        ↓
+Proximity Sensor
+        ↓
+PLC Digital Input
+
+The PLC reads whether the sensor is ON or OFF and executes ladder logic.
+
+---
+
+# Proximity Sensor vs Push Button
+
+Push Button:
+- Human gives the signal.
+- Requires physical interaction.
+
+Proximity Sensor:
+- Machine automatically detects objects.
+- Used for automation.
+
+Example:
+
+Before:
+Operator presses button → Conveyor starts
+
+After:
+Sensor detects object → PLC starts/stops conveyor automatically
