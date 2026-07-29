@@ -1,4 +1,4 @@
-# PLC Project 1 – Delayed Start Light with Safety Interlock
+# PLC Project 1 – Conveyer Belt Project
 
 ## Overview
 
@@ -36,7 +36,7 @@ The goal is to understand the fundamentals of PLC programming by creating a simp
 
 ---
 
-## PLC Project 1 – Delayed Start Light with Safety Interlock
+## PLC Project 1 – Conveyer Belt Project
 
 Objective
 
@@ -114,3 +114,66 @@ Learned that industrial stop buttons are normally closed because the circuit rem
 This project introduced me to the fundamentals of PLC programming using ladder logic. At first, I focused mainly on making the circuit work, but I later realized that a working program is not always the best design. My original solution latched the Light output directly, which required holding the Start button until the timer finished. After redesigning the program with an internal Run_Latch memory bit, I better understood how industrial PLC programs separate machine state, timing, and outputs into multiple rungs. This project also improved my understanding of timers, parallel branches, normally closed contacts, and troubleshooting ladder logic. Going forward, I want to build programs that are not only functional but also easier to maintain and troubleshoot.
 
 ![alt text](image.png)
+
+# Version 2 – Product Counting System
+## Objective
+
+Design and program a PLC-controlled conveyor belt system that safely starts after a five-second delay, counts products using a simulated sensor, and indicates when a batch of ten products has been completed.
+
+## Components Used
+
+Inputs
+
+- Start_PB – Starts the conveyor system.
+- Stop_PB – Stops the conveyor system.
+- Safety_SW – Prevents the conveyor from starting unless the safety switch is active.
+- Product_Sensor – Detects products moving past the sensor and increments the counter.
+- Reset_PB – Resets the product counter to begin a new batch.
+
+Internal Memory / Function Blocks
+
+- Conveyor_Run_Latch (BOOL) – Keeps the conveyor running after the Start button is released.
+- Startup_Timer (TON) – Delays conveyor startup by 5 seconds.
+- Product_Counter (CTU) – Counts products detected by the sensor until the preset value is reached.
+
+Outputs
+- Conveyor_Motor – Runs the conveyor after the startup delay has elapsed.
+- Batch_Complete_Light – Turns ON after ten products have been counted.
+
+## Program Logic
+
+1. After the timer finishes, the conveyor motor turns ON.
+2. As products pass the Product_Sensor, the CTU counter increments by one.
+3. When the counter reaches the preset value of 10, the Batch_Complete_Light turns ON.
+4. The operator presses Reset_PB to clear the counter and begin a new production batch.
+
+## What I Learned
+
+- How to create and use a TON (On-Delay Timer).
+- How to implement a CTU (Count Up Counter).
+- The difference between a contact and a coil in ladder logic.
+- ow PLC function blocks store information internally.
+- The purpose of PV (Preset Value), CV (Current Value), and Q in a counter.
+- Why internal variables such as Conveyor_Run_Latch are useful.
+- How multiple rungs work together to create an industrial control sequence.
+
+## Problems Encountered
+
+- Problem 1 – Understanding Contacts vs. Coils
+
+At first, I thought the conveyor motor should always be represented as a coil. I later learned that the coil writes to the variable, while contacts read the current state of that same variable elsewhere in the program.
+
+- Problem 2 – Counter Data Type
+
+Initially, I entered the preset value as a regular number. I learned that the CTU function block expects the correct data type (such as UINT) for the preset value.
+
+- Problem 3 – Counter Placement
+
+I was unsure whether the counter should be placed within the timer logic or on its own rung. I learned that each rung should have a single responsibility, making the program easier to read and troubleshoot.
+
+## Reflection
+
+This project helped me understand how timers and counters are used together in industrial automation. Instead of creating isolated examples, I expanded my original delayed-start project into a conveyor belt control system, making the program more realistic. I also developed a better understanding of PLC scan logic, function blocks, and the importance of organizing ladder logic into clear, modular rungs. In the next version of the project, I plan to improve operator feedback by adding status indicators and additional safety features.
+
+![](image-1.png)
+
