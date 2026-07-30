@@ -197,3 +197,6 @@ In industry, proximity sensors automatically detect parts without physical conta
 ### What I Learned
 - How a digital sensor acts as a PLC input.
 - How multiple conditions can be combined using series contacts.
+
+![alt text](image-2.png)
+
