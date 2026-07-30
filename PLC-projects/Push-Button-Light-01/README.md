@@ -177,3 +177,23 @@ This project helped me understand how timers and counters are used together in i
 
 ![](image-1.png)
 
+## Version 3 - Industrial Sensor Simulation 
+
+### Objective
+Simulate an inductive proximity sensor detecting a metal object on the conveyor.
+
+### Inputs
+- Metal_Part_Detected (BOOL)
+
+### Outputs
+- Part_Detected_Light
+
+### Program Logic
+When the conveyor motor is running and a metal part is detected, the green indicator light turns on to show that the object has been successfully detected.
+
+### Why This Is Used
+In industry, proximity sensors automatically detect parts without physical contact. The PLC uses this information to make decisions such as counting products, stopping conveyors, or activating other equipment.
+
+### What I Learned
+- How a digital sensor acts as a PLC input.
+- How multiple conditions can be combined using series contacts.
