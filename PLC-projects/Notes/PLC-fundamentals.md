@@ -446,3 +446,184 @@ Operator presses button → Conveyor starts
 
 After:
 Sensor detects object → PLC starts/stops conveyor automatically
+
+# Photoelectric Sensors
+## What is a Photoelectric Sensor?
+- A photoelectric sensor detects the presence of an object using a beam of light.
+- It does not require physical contact with the object.
+- It is commonly used in industrial automation for object detection, counting, sorting, and conveyor systems.
+- The sensor sends a digital ON/OFF signal to the PLC when an object is detected.
+
+## Types of Photoelectric Sensors
+
+1. Through-Beam Sensor
+
+## How it works
+Uses two separate devices:
+- A transmitter sends a beam of light.
+- A receiver detects the beam.
+- When an object blocks the beam, the sensor changes its output.
+
+## Advantages
+
+- Longest sensing range.
+- Most accurate and reliable.
+- Less affected by object color or reflectivity.
+
+## Disadvantages
+
+- More expensive.
+- Requires two devices and additional wiring.
+
+## Common Applications
+
+- Long conveyor systems.
+- Large industrial machines.
+- High-speed product detection.
+
+2. Reflective (Retro-Reflective) Sensor
+
+## How it works
+
+- Uses one sensor head containing both the transmitter and receiver.
+- A reflector is placed on the opposite side.
+- The sensor detects an object when the light beam is interrupted.
+
+## Advantages
+- Less expensive than through-beam sensors.
+- Easier to install.
+- Only one sensor head is required.
+
+## Disadvantages
+
+- Shorter sensing range.
+- Slightly less accurate than through-beam sensors.
+
+## Common Applications
+
+- Conveyor belts.
+- Packaging machines.
+- Product detection.
+
+## 3. Diffuse Sensor
+
+## How it works
+- Uses one sensor head.
+- The object reflects the light back to the sensor.
+- No reflector is needed.
+
+## Advantages
+
+- Only one sensor is required.
+- Ideal when you cannot access the opposite side of the object.
+
+## Disadvantages
+
+- Short detection distance.
+- Performance depends on the object's surface and reflectivity.
+- Can produce false readings from background objects.
+
+## Common Applications
+
+- Mall conveyor systems.
+- Assembly lines.
+- Object presence detection.
+
+4. Diffuse Sensor with Background Suppression
+
+## How it works
+
+- Similar to a diffuse sensor but uses multiple receivers.
+- Can distinguish the target object from the background.
+- Ignores unwanted reflections behind the object.
+
+## Advantages
+
+- More reliable than a standard diffuse sensor.
+- Reduces false detections.
+- Similar cost and sensing range as diffuse sensors.
+
+## Common Applications
+
+- Conveyors with equipment or walls behind the product.
+- Automated sorting systems.
+
+5. Fiber Optic Photoelectric Sensor
+
+## How it works
+
+The optics are separated from the electronics using fiber optic cables.
+Only the small fiber optic head is placed near the target.
+
+## Advantages
+
+- Fits into very small spaces.
+- Electronics can be kept away from heat, vibration, or electrical noise.
+- Small beam can detect very small objects.
+
+## Disadvantages
+
+- More specialized than standard photoelectric sensors.
+- Requires fiber optic cables.
+
+## Common Applications
+- Compact machinery.
+- High-temperature environments.
+- Precision manufacturing.
+
+## Light-On vs Dark-On
+### Light-On
+- The sensor output is ON when it receives light.
+- Commonly used with diffuse sensors.
+
+### Dark-On
+- The sensor output is ON when the light beam is blocked.
+- Commonly used with through-beam and reflective sensors.
+
+Some sensors can be configured for either operating mode.
+
+PLC Connection
+
+Typical operation:
+
+Object
+      ↓
+Photoelectric Sensor
+      ↓
+PLC Digital Input
+      ↓
+Ladder Logic
+      ↓
+Motor / Light / Alarm
+
+Example:
+
+Box reaches conveyor sensor
+        ↓
+Photoelectric sensor detects box
+        ↓
+PLC input turns ON
+        ↓
+Conveyor stops for inspection
+
+## Advantages
+- Detects most materials (not just metal).
+- No physical contact required.
+- Fast response time.
+- Commonly used in conveyor and packaging systems.
+- Available in many sizes and configurations.
+
+## Limitations
+
+- Dust, dirt, or poor alignment can affect performance.
+- Diffuse sensors depend on the object's reflectivity.
+- Through-beam sensors require two devices and more wiring.
+
+## Common Industrial Applications
+
+- Conveyor belts
+- Product counting
+- Packaging machines
+- Sorting systems
+- Position detection
+- utomated assembly lines
