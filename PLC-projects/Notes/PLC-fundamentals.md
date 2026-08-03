@@ -626,4 +626,393 @@ Conveyor stops for inspection
 - Packaging machines
 - Sorting systems
 - Position detection
-- utomated assembly lines
+- Automated assembly lines
+
+# Pressure Transmitters
+
+## What is a Pressure Transmitter?
+
+- A pressure transmitter is an industrial instrument that measures pressure and sends an analog electrical signal to a PLC or Distributed Control System (DCS).
+- It combines a pressure transducer with electronics that convert the sensor's signal into a standardized output.
+- Common output signals include:
+  - **4–20 mA**
+  - **1–5 V**
+- The output represents **0–100%** of the pressure measurement range.
+
+---
+
+## Transducer vs. Transmitter
+
+### Transducer
+
+- Converts one form of energy into another.
+- In pressure measurement, the transducer converts physical pressure into a small electrical signal.
+- The sensing element may use technologies such as:
+  - Strain Gauge
+  - Capacitance
+  - Potentiometric sensors
+
+### Transmitter
+
+- Receives the small electrical signal from the transducer.
+- Amplifies and converts it into a standardized analog signal.
+- Sends the signal over long distances to a PLC or DCS.
+
+---
+
+## Types of Pressure Measurement
+
+### Absolute Pressure
+
+- Measured relative to a perfect vacuum (0 PSI absolute).
+- Atmospheric pressure is approximately **14.7 PSI absolute**.
+
+### Gauge Pressure
+
+- Measured relative to atmospheric pressure.
+- Atmospheric pressure equals **0 PSI gauge**.
+- This is the most common pressure measurement used in industry.
+
+### Differential Pressure
+
+- Measures the difference between two pressures.
+- Can also be used to measure:
+  - Liquid level
+  - Flow rate
+  - Pressure difference
+
+---
+
+## PLC Connection
+
+Typical operation:
+
+Pressure in Pipe
+↓
+Pressure Transducer
+↓
+Pressure Transmitter
+↓
+4–20 mA Analog Signal
+↓
+PLC Analog Input
+↓
+PLC Program
+
+---
+
+## Industrial Example
+
+A pressure transmitter is installed on a pipeline to measure gas pressure.
+
+Example:
+
+- Measuring Range: **0–350 PSI**
+- PLC Signal: **4–20 mA**
+- 4 mA = 0 PSI
+- 20 mA = 350 PSI
+
+The PLC continuously monitors the analog signal and can generate alarms, display pressure values, or control equipment based on the measured pressure.
+
+---
+
+## Advantages
+
+- Provides continuous pressure measurement.
+- Accurate over long cable distances.
+- Standardized analog outputs are compatible with most PLCs.
+- Can be used for monitoring, alarms, and automatic process control.
+
+---
+
+## Common Industrial Applications
+
+- Oil and gas pipelines
+- Water treatment plants
+- Chemical processing
+- Hydraulic systems
+- Pneumatic systems
+- Manufacturing equipment
+- Power generation
+
+# Level Sensors
+
+## What is a Level Sensor?
+
+- A level sensor measures the amount of material inside a container or tank.
+- The material being measured can be:
+  - Liquids
+  - Powders
+  - Solids
+  - Slurries
+- Level sensors send either a digital or analog signal to a PLC so it can monitor and control industrial processes.
+
+---
+
+## Types of Level Measurement
+
+### Point Level Measurement
+
+- Detects whether a product has reached a specific point.
+- Produces a digital ON/OFF signal.
+- Commonly used for:
+  - High-level alarms
+  - Low-level alarms
+  - Tank full indication
+  - Empty tank protection
+
+---
+
+### Continuous Level Measurement
+
+- Continuously measures the level as it rises or falls.
+- Produces an analog signal.
+- Allows the PLC to know exactly how full a tank is.
+
+---
+
+# Point Level Sensors
+
+## Capacitance Level Sensor
+
+### How it Works
+
+- Produces an electrical field.
+- Detects changes in capacitance when a liquid enters the sensing area.
+
+### Advantages
+
+- Small and compact.
+- No moving parts.
+- Accurate.
+- Low maintenance.
+
+### Disadvantages
+
+- Must be calibrated.
+- Only suitable for certain liquids.
+- Sensor must touch the product.
+
+### Common Applications
+
+- Water treatment tanks.
+- Liquid storage tanks.
+
+---
+
+## Optical Level Sensor
+
+### How it Works
+
+- Uses light to detect the presence of a liquid.
+- Converts reflected light into an electrical signal.
+
+### Advantages
+
+- No moving parts.
+- Works in high pressure and temperature.
+- Compact.
+
+### Disadvantages
+
+- Lens must remain clean.
+- Dirt or residue can affect accuracy.
+
+### Common Applications
+
+- Oil reservoirs.
+- Hydraulic systems.
+- Coolant tanks.
+
+---
+
+## Conductivity (Resistance) Level Sensor
+
+### How it Works
+
+- Uses electrodes to detect conductive liquids.
+- When the liquid completes the electrical circuit, the sensor changes state.
+
+### Advantages
+
+- Low cost.
+- No moving parts.
+- Simple design.
+
+### Disadvantages
+
+- Only works with conductive liquids.
+- Electrodes wear over time.
+- Sensor must touch the liquid.
+
+### Common Applications
+
+- High and low level alarms.
+- Water tanks.
+- Conductive liquid storage.
+
+---
+
+## Vibrating Fork (Tuning Fork) Sensor
+
+### How it Works
+
+- A metal fork vibrates at its natural frequency.
+- Contact with material changes the vibration frequency.
+- The sensor detects this change.
+
+### Advantages
+
+- Compact.
+- Reliable.
+- Easy to install.
+- Almost maintenance free.
+
+### Disadvantages
+
+- Must touch the product.
+
+### Common Applications
+
+- Mining.
+- Food and beverage.
+- Chemical processing.
+
+---
+
+## Float Switch
+
+### How it Works
+
+- A float rises and falls with the liquid level.
+- This movement opens or closes an electrical switch.
+
+### Advantages
+
+- Simple.
+- Inexpensive.
+- No external power required.
+
+### Disadvantages
+
+- Moving parts can wear out.
+- Must touch the liquid.
+- Only indicates HIGH or LOW level.
+
+### Common Applications
+
+- Water tanks.
+- Storage tanks.
+- Sump pumps.
+
+---
+
+# Continuous Level Sensors
+
+## Ultrasonic Level Sensor
+
+### How it Works
+
+- Sends ultrasonic sound waves toward the material.
+- Measures the time required for the sound wave to return.
+- Calculates the level using the distance.
+
+### Advantages
+
+- Non-contact.
+- No moving parts.
+- Self-cleaning.
+- Reliable.
+
+### Disadvantages
+
+- More expensive.
+- Steam, dust, or environmental conditions may affect readings.
+
+### Common Applications
+
+- Hot liquid tanks.
+- Asphalt tanks.
+- Water treatment facilities.
+
+---
+
+## Radar (Microwave) Level Sensor
+
+### How it Works
+
+- Sends microwave signals toward the material.
+- Measures the return time of the reflected signal.
+- Calculates the level.
+
+### Advantages
+
+- Extremely accurate.
+- No calibration required.
+- Non-contact.
+- Works with:
+  - Liquids
+  - Powders
+  - Solids
+  - Pastes
+
+### Disadvantages
+
+- Expensive.
+- Limited sensing range.
+
+### Common Applications
+
+- Chemical tanks.
+- Oil storage tanks.
+- Food processing.
+- High-temperature liquid tanks.
+
+---
+
+## PLC Connection
+
+Typical operation:
+
+Tank
+↓
+Level Sensor
+↓
+Digital or Analog Signal
+↓
+PLC Input
+↓
+PLC Program
+
+---
+
+## Choosing the Right Level Sensor
+
+When selecting a level sensor, engineers consider:
+
+- Type of material.
+- Contact or non-contact measurement.
+- Point level or continuous level measurement.
+- Required accuracy.
+- Temperature and pressure.
+- Cost.
+
+---
+
+## Common Industrial Applications
+
+- Water treatment plants.
+- Oil and gas storage.
+- Chemical processing.
+- Food and beverage manufacturing.
+- Mining.
+- Pharmaceutical production.
+- Bulk material storage.
+
+---
+
+## Chosen Sensor
+
+For my conveyor project, I would not use a level sensor because my system transports products rather than storing liquids or solids.
+
+However, if I were designing a liquid storage tank, I would choose a radar level sensor because it provides continuous level measurement, does not require contact with the liquid, and is unaffected by dust, temperature, or pressure.
