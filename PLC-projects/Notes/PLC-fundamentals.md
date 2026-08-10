@@ -1016,3 +1016,370 @@ When selecting a level sensor, engineers consider:
 For my conveyor project, I would not use a level sensor because my system transports products rather than storing liquids or solids.
 
 However, if I were designing a liquid storage tank, I would choose a radar level sensor because it provides continuous level measurement, does not require contact with the liquid, and is unaffected by dust, temperature, or pressure.
+
+# Temperature Transmitters
+
+## What is a Temperature Transmitter?
+
+- A temperature transmitter measures process temperature by receiving a signal from a temperature sensor and converting it into a standardized analog signal.
+- The most common output signal is **4–20 mA**, which is sent to a PLC or Distributed Control System (DCS).
+- The PLC uses this signal to monitor and control heating or cooling equipment.
+
+---
+
+## How It Works
+
+Temperature
+↓
+Temperature Sensor (RTD or Thermocouple)
+↓
+Temperature Transmitter
+↓
+4–20 mA Analog Signal
+↓
+PLC Analog Input
+↓
+PLC Program
+
+---
+
+## Types of Temperature Transmitters
+
+### DIN Rail Mounted
+
+- Installed inside electrical control panels.
+- Commonly used in control cabinets.
+
+### Field Mounted
+
+- Installed directly near industrial equipment.
+- Designed for harsh environments.
+
+### Hockey Puck Style
+
+- Compact transmitter mounted inside sensor connection heads.
+
+---
+
+## Temperature Sensors
+
+### RTD (Resistance Temperature Detector)
+
+- Measures temperature by changing electrical resistance.
+- Can have 2, 3, or 4 wires.
+- Very accurate and stable.
+
+---
+
+### Thermocouple
+
+- Made from two different metals joined together.
+- Produces a very small voltage that changes with temperature.
+- Only requires two wires.
+
+---
+
+## Wiring
+
+### 2-Wire Transmitter
+
+- Most common type.
+- Uses the same two wires for both power and the 4–20 mA signal.
+
+### 4-Wire Transmitter
+
+- Two wires provide power.
+- Two separate wires carry the output signal.
+
+---
+
+## Calibration
+
+Temperature transmitters must be calibrated so that:
+
+- Lowest process temperature = **4 mA**
+- Highest process temperature = **20 mA**
+
+Example:
+
+- 0°C → 4 mA
+- 100°C → 20 mA
+
+Older transmitters use:
+
+- Zero adjustment
+- Span adjustment
+
+Modern transmitters are calibrated using computer software.
+
+---
+
+## Smart Temperature Transmitters
+
+Modern transmitters can communicate digitally using protocols such as:
+
+- HART
+- FOUNDATION Fieldbus
+- PROFIBUS
+
+Besides temperature, they can also provide:
+
+- Instrument tag names
+- Calibration data
+- Diagnostic information
+
+---
+
+## Wireless Temperature Transmitters
+
+- Send measurements wirelessly instead of through signal cables.
+- Data can be viewed on computers or retransmitted to a PLC.
+
+---
+
+## Advantages
+
+- Accurate temperature measurement.
+- Standard 4–20 mA output.
+- Compatible with PLCs and DCS systems.
+- Suitable for long-distance signal transmission.
+- Available for many industrial environments.
+
+---
+
+## Common Industrial Applications
+
+- Boilers
+- Furnaces
+- Ovens
+- Food processing
+- Chemical reactors
+- Water treatment
+- HVAC systems
+- Heat exchangers
+
+---
+
+# RTD vs Thermocouple
+
+## What is an RTD?
+
+- RTD stands for **Resistance Temperature Detector**.
+- It measures temperature by detecting changes in electrical resistance.
+- RTDs are passive devices and require an external current source.
+- Common materials include:
+  - Platinum (most common)
+  - Nickel
+  - Copper
+
+---
+
+## What is a Thermocouple?
+
+- A thermocouple consists of two different metals joined together.
+- Temperature changes produce a very small voltage.
+- This voltage corresponds to the measured temperature.
+- Thermocouples are active devices because they generate their own signal.
+
+---
+
+## Measuring Range
+
+### RTD
+
+- **-200°C to +850°C**
+
+### Thermocouple
+
+- **-250°C to +1800°C**
+
+---
+
+## Common Thermocouple Types
+
+- K-Type
+  - Chromel + Alumel
+  - High-temperature furnaces
+  - Boilers
+
+- J-Type
+  - Iron + Constantan
+  - Refrigeration
+  - Lower-temperature applications
+
+---
+
+## RTD Advantages
+
+- Higher accuracy.
+- More stable over time.
+- Linear output.
+- Better sensitivity.
+- Excellent for precise temperature control.
+
+---
+
+## RTD Disadvantages
+
+- More expensive.
+- Slower response time.
+- Cannot measure extremely high temperatures.
+
+---
+
+## Thermocouple Advantages
+
+- Lower cost.
+- Faster response time.
+- Very wide temperature range.
+- Excellent for extreme temperatures.
+
+---
+
+## Thermocouple Disadvantages
+
+- Lower accuracy.
+- Non-linear output.
+- More affected by electrical interference.
+- Less stable over time.
+
+---
+
+## Choosing the Right Sensor
+
+Choose an RTD when:
+
+- High accuracy is required.
+- Temperature is below approximately 850°C.
+- Long-term stability is important.
+
+Choose a Thermocouple when:
+
+- Temperature exceeds 850°C.
+- Fast response is required.
+- Lower cost is important.
+
+---
+
+## Industrial Applications
+
+### RTD
+
+- Food processing
+- Pharmaceutical manufacturing
+- Water treatment
+- HVAC
+- Process control
+
+### Thermocouple
+
+- Steel manufacturing
+- Furnaces
+- Boilers
+- Kilns
+- Glass production
+- Engine exhaust monitoring
+
+---
+
+## Sensor Selection Factors
+
+When choosing a temperature sensor, engineers consider:
+
+- Temperature range
+- Accuracy
+- Response time
+- Stability
+- Environment
+- Cost
+- Sensitivity
+
+---
+
+# PLC Interlocks and Troubleshooting
+
+## What is an Interlock?
+
+- An **interlock** is a condition that prevents an action from occurring unless certain requirements are satisfied.
+- Interlocks are used to:
+  - Prevent unsafe operation.
+  - Protect equipment.
+  - Prevent unintended operations.
+  - Control the sequence of a process.
+
+---
+
+## Types of Interlocks
+
+There are two main categories:
+
+- **Safety interlocks**
+- **Non-safety interlocks**
+
+---
+
+## Safety Interlocks
+
+- Designed to protect people from hazardous equipment.
+- Often use redundant safety circuits and safety-rated components.
+- Example:
+  - A robotic cell has a safety gate.
+  - When the gate is open, the robot cannot operate.
+  - The system cannot be reset until the gate is closed.
+
+> Safety interlocks should use appropriate safety-rated hardware and systems rather than relying only on normal PLC logic.
+
+---
+
+## Non-Safety Interlocks
+
+- Used primarily to:
+  - Protect equipment.
+  - Prevent incorrect operation.
+  - Prevent equipment from operating in an undesirable sequence.
+
+There are three common types:
+
+- Mechanical interlocks
+- Electrical interlocks
+- Logic interlocks
+
+---
+
+## Mechanical Interlocks
+
+- A physical mechanism prevents two devices from performing incompatible actions.
+- Example:
+  - A forward/reverse motor starter can use a mechanical interlock.
+  - The interlock prevents both contactors from being energized at the same time.
+- This prevents equipment damage.
+
+---
+
+## Electrical Interlocks
+
+- Use electrical contacts to prevent another device from energizing.
+- Normally open (NO) and normally closed (NC) contacts can be used.
+- Relays and contactors commonly use electrical interlocking.
+
+### Example
+
+- If `CR2` is energized, its NC contact opens.
+- This prevents `CR1` from energizing.
+- Therefore, `CR1` and `CR2` cannot operate at the same time.
+
+---
+
+## Logic Interlocks
+
+- Created inside the PLC program.
+- A condition or variable must be TRUE before another operation is allowed.
+
+### Example
+
+```text
+Pump_1_Running
+       AND
+Start_Pump_2
+       ↓
+Pump_2
