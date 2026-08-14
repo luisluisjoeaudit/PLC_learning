@@ -282,3 +282,220 @@ This version expanded the conveyor project beyond simple product detection by si
 
 ![alt text](image-3.png)
 
+## Interlock & Fault Analysis
+
+### Hazard / Failure 1 – Safety Condition Lost
+
+**Problem:**
+The conveyor should not operate when the required safety condition is not satisfied.
+
+**Required Response:**
+Prevent the conveyor from running.
+
+**Control Method:**
+Safety interlock.
+
+---
+
+### Failure 2 – Motor Fault
+
+**Problem:**
+The conveyor motor develops a fault while operating.
+
+**Required Response:**
+Stop/prevent conveyor operation and notify the operator.
+
+**Control Method:**
+Logic interlock + fault indication.
+
+---
+
+### Failure 3 – Invalid Sensor State
+
+**Problem:**
+A product sensor detects an object when the conveyor is not running.
+
+**Required Response:**
+Detect the abnormal condition and generate a sensor fault.
+
+**Control Method:**
+PLC diagnostic logic.
+
+---
+
+### Failure 4 – Fault Recovery
+
+**Problem:**
+The conveyor should not automatically restart after a fault.
+
+**Required Response:**
+Require the fault to be cleared and manually reset before restarting.
+
+**Control Method:**
+Fault latch + reset logic.
+
+# Version 5 - Industrial Fault & Interlock System
+
+## Objective
+
+Expand the conveyor automation system by adding simulated industrial equipment faults and interlocks. The system should detect abnormal conditions, prevent unsafe or unwanted operation, stop affected equipment, and provide operator indications for fault and reset conditions.
+
+---
+
+## Fault Handling System
+
+### Failure 1 - Motor Fault
+
+#### Problem
+
+The conveyor motor develops a simulated fault such as an overheat condition while the conveyor is operating.
+
+#### Input
+
+- Motor_Overheat (BOOL) - Simulates a motor overheat/fault condition.
+- Motor_E_Stop (BOOL) - Simulates an emergency-stop condition affecting the motor.
+- Motor_Reset_PB (BOOL) - Allows the operator to request a manual reset.
+
+#### Outputs
+
+- Motor_Stop_Indication (BOOL) - Indicates that the motor has been stopped because of a fault.
+- Motor_Reset_Indication (BOOL) - Indicates that the reset command has been activated.
+
+#### Program Logic
+
+1. The PLC monitors the motor fault conditions.
+2. When a motor fault occurs, the motor is prevented from continuing normal operation.
+3. The PLC activates the Motor_Stop_Indication to notify the operator.
+4. The operator must address the fault before attempting a reset.
+5. The operator presses Motor_Reset_PB.
+6. The PLC activates Motor_Reset_Indication to provide feedback that the reset command has been received.
+
+#### Control Method
+
+- Logic interlock
+- Fault indication
+- Manual reset
+
+---
+
+## Failure 2 - Conveyor Fault
+
+### Problem
+
+The conveyor develops a simulated fault while operating.
+
+### Input
+
+- Conveyor_Fault (BOOL) - Simulates a conveyor equipment failure.
+
+### Output
+
+- Conveyor_Fault_Indication (BOOL) - Indicates that a conveyor fault has occurred.
+
+### Program Logic
+
+1. The PLC monitors the Conveyor_Fault signal.
+2. When Conveyor_Fault becomes active, normal conveyor operation is prevented.
+3. The PLC activates Conveyor_Fault_Indication.
+4. The operator is notified that the conveyor requires attention.
+5. The fault must be cleared before normal operation can resume.
+
+### Control Method
+
+- Logic interlock
+- Fault indication
+- Manual recovery
+
+---
+
+## Failure 3 - Safety Interlock
+
+### Problem
+
+The conveyor should not operate when the required safety condition is not satisfied.
+
+### Input
+
+- Safety_SW (BOOL) - Represents the required safety condition.
+
+### Required Response
+
+- Prevent the conveyor from starting when the safety condition is not satisfied.
+- Stop/prevent operation if the safety condition is lost.
+
+### Control Method
+
+- Safety interlock
+- Permissive condition
+
+### Why This Is Used
+
+Industrial machines use interlocks and permissives to prevent equipment from operating when required conditions are not satisfied.
+
+---
+
+## Fault and Operator Feedback
+
+The project now contains separate indications for different abnormal conditions.
+
+### Motor Fault
+
+```text
+[ Motor_Overheat ] --------------------( Motor_Stop_Indication )
+
+Fault Detected
+      ↓
+Interlock Activated
+      ↓
+Equipment Stopped
+      ↓
+Fault Indication
+      ↓
+Operator Investigates Fault
+      ↓
+Fault Cleared
+      ↓
+Manual Reset
+      ↓
+Reset Indication
+      ↓
+Restart Permissive
+      ↓
+Normal Operation
+
+## Problems Encountered
+
+### Problem 1 - Understanding Fault Logic
+
+Initially, I was unsure how a simulated equipment fault should connect to the rest of the conveyor program.
+
+I learned that the fault system has two major purposes:
+
+- Prevent equipment from operating when a fault is active.
+- Tell the operator that a fault has occurred.
+
+### Problem 2 - Separating Control and Diagnostics
+
+I initially thought that the fault indication and equipment shutdown needed to be handled by the same rung.
+
+I learned that industrial PLC programs can separate:
+
+- Equipment control
+- Interlocks
+- Fault detection
+- Operator indications
+- Reset and recovery logic
+
+This makes the program easier to troubleshoot and expand.
+
+### Problem 3 - Understanding Fault Recovery
+
+I learned that simply removing a fault signal does not necessarily mean that equipment should immediately restart.
+
+A more realistic control system can require:
+
+- The fault to be cleared.
+- The operator to perform a manual reset.
+- All restart permissives to be satisfied.
+
+Only after these conditions are satisfied should normal operation resume.

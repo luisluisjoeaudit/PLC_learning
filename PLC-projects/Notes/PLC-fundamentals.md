@@ -1383,3 +1383,105 @@ Pump_1_Running
 Start_Pump_2
        ↓
 Pump_2
+
+
+# HMI Fundamentals
+
+## What is an HMI?
+
+- HMI stands for **Human Machine Interface**.
+- An HMI allows operators to **control and monitor industrial machines**.
+- Industrial HMIs are commonly touchscreen displays.
+- HMIs can display:
+  - Temperature
+  - Pressure
+  - Tank levels
+  - Machine status
+  - Process steps
+  - Production counts
+  - Faults and alarms
+
+---
+
+## HMI and PLC
+
+- The **PLC performs the control logic**.
+- The **HMI provides the operator interface**.
+- The HMI can read information from PLC variables.
+- The HMI can also write commands to PLC variables.
+- Examples:
+  - HMI Start button → PLC Start variable
+  - PLC Motor status → HMI Motor indicator
+  - PLC Tank_Level → HMI tank display
+
+---
+
+## HMI Communication
+
+- The HMI and PLC must be able to communicate with each other.
+- They communicate using an industrial communication **protocol**.
+- Common industrial protocols include:
+  - Modbus
+  - EtherNet/IP
+  - PROFIBUS
+
+---
+
+## HMI Tags / Variables
+
+- HMI objects must be connected to PLC variables.
+- A button can be connected to a BOOL variable.
+- A lamp can display the state of a BOOL variable.
+- Numeric displays can show values such as:
+  - Pressure
+  - Temperature
+  - Level
+  - Product count
+
+---
+
+# CODESYS Visualization
+
+## Creating a Visualization
+
+- Add a **Visualization Manager** under the Application.
+- Add a **Visualization** object.
+- Create a screen such as `Screen_01`.
+- Use the Visualization Toolbox to add objects.
+
+---
+
+## Visualization Objects
+
+Common visualization objects include:
+
+- Push buttons
+- Switches
+- Lamps
+- Numeric displays
+- Text
+- Graphs
+- Alarm displays
+
+---
+
+## Connecting Objects to Variables
+
+- HMI objects can be connected to PLC variables.
+- A push button can change a BOOL variable.
+- A lamp can display the state of a BOOL variable.
+
+Example:
+
+```text
+HMI Push Button
+       ↓
+   xPbutton_1
+       ↓
+    PLC Logic
+       ↓
+      xLamp
+       ↓
+   HMI Lamp
+
+   
