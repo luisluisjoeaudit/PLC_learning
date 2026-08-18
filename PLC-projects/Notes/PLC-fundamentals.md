@@ -1484,4 +1484,63 @@ HMI Push Button
        ↓
    HMI Lamp
 
-   
+# Alarm Management Fundamentals
+
+## What is Alarm Management?
+
+- Alarm management is the process of **detecting, displaying, storing, and responding to abnormal conditions** in an industrial control system.
+- Alarms notify operators when something requires attention.
+- Alarms can be triggered by:
+  - Motor faults
+  - Excessive temperature
+  - Equipment running too long
+  - Sensor failures
+  - Process conditions
+  - Repeated faults
+
+---
+
+## Alarm Classes
+
+### Warning
+
+- Indicates a condition that requires attention.
+- Usually represents a less severe problem.
+- Example:
+  - Motor has been running longer than expected.
+- A warning may allow the machine to continue operating.
+
+### Error
+
+- Indicates a more serious problem.
+- May require the machine to stop.
+- Example:
+  - Motor has repeatedly exceeded its operating condition.
+- An error may require operator intervention and acknowledgement.
+
+---
+
+## Alarm Conditions
+
+- An alarm is triggered when a specific condition becomes **TRUE**.
+- Alarm conditions can be based on:
+  - BOOL variables
+  - Timer outputs
+  - Counter outputs
+  - Analog values
+  - Sensor states
+  - Equipment status
+
+Example:
+
+```text
+Motor_Run
+    |
+    v
+Alarm_Timer
+    |
+    v
+Alarm_Timer.Q
+    |
+    v
+Warning Alarm
