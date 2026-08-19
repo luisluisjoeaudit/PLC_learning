@@ -1544,3 +1544,302 @@ Alarm_Timer.Q
     |
     v
 Warning Alarm
+
+# Encoders
+
+## What is an Encoder?
+
+- An **encoder** is a sensing device used to determine the position, direction, distance, or speed of mechanical motion.
+- Encoders provide continuous motion feedback to a controller such as:
+  - PLC
+  - VFD
+  - Servo drive
+- Common applications include:
+  - Pick-and-place systems
+  - Packaging machines
+  - Positioning systems
+  - Rotary tables
+  - Conveyor systems
+
+---
+
+## Encoder vs. Limit Switch
+
+### Limit Switch
+
+- Detects a specific physical position.
+- Generally provides a simple ON/OFF signal.
+- Example:
+  - Machine reaches the end of its travel → limit switch activates.
+
+### Encoder
+
+- Provides continuous motion feedback.
+- Can determine:
+  - Position
+  - Distance
+  - Direction
+  - Speed
+
+---
+
+# Encoder Technologies
+
+## Optical Encoder
+
+- Uses light to detect movement.
+- Generally the most accurate of the standard encoder technologies.
+- More susceptible to:
+  - Vibration
+  - Shock
+  - Wear
+
+---
+
+## Magnetic Encoder
+
+- Uses magnetic sensing technology.
+- Very rugged.
+- Well suited for harsh industrial environments.
+- Generally less accurate than optical encoders.
+
+---
+
+## Capacitive Encoder
+
+- Uses capacitive sensing technology.
+- Similar ruggedness to magnetic encoders.
+- Generally less accurate than optical encoders.
+
+---
+
+# Encoder Geometry
+
+## Linear Encoder
+
+- Measures motion along a straight path.
+- Uses:
+  - A scale or target strip.
+  - A sensing head.
+- Resolution is usually expressed as:
+  - Pulses per inch (PPI)
+  - Pulses per millimeter
+
+### Example
+
+- A 100 PPI encoder produces 100 pulses for every inch of movement.
+- The PLC can use the pulse count to determine how far the object has moved.
+
+---
+
+## Rotary Encoder
+
+- Measures rotational movement.
+- Uses:
+  - A rotating disc.
+  - A sensing head.
+- Resolution is usually expressed as:
+  - Pulses per Revolution (PPR)
+  - Lines per Revolution (LPR)
+
+### Example
+
+- A 100 PPR encoder produces 100 pulses for every revolution.
+- The controller can use the pulses to determine rotational position or distance.
+
+---
+
+# Encoder Resolution
+
+- Encoder resolution determines how precisely motion can be tracked.
+- Higher resolution provides more motion information.
+
+### Example
+
+- A 100 PPR encoder produces 100 primary pulse cycles per revolution.
+- A controller can detect transitions in the encoder signal to obtain additional position information.
+
+---
+
+# Measuring Distance
+
+- Encoder pulses can be related to a known amount of mechanical movement.
+- If one encoder revolution corresponds to a specific distance traveled, the PLC can calculate distance based on the number of pulses received.
+
+Example:
+
+```text
+1 Revolution = 1 ft of travel
+100 PPR = 100 pulses per ft
+1 pulse = 0.01 ft of travel
+
+# Encoder Concepts and Conveyor Project Applications
+
+## Quadrature Encoders
+
+### What is Quadrature?
+* A quadrature encoder uses two output signals.
+* The two signals are shifted approximately 90° apart.
+* The controller compares the timing of the two signals.
+* This allows the PLC, drive, or servo to determine:
+  * Position
+  * Direction of rotation
+
+### Example
+```text
+Channel A  ──┐    ┌────┐    ┌────
+             └────┘    └────
+
+Channel B  ─────┐    ┌────┐    ┌──
+                └────┘    └────┘
+```
+* The phase relationship between Channel A and Channel B indicates the direction of rotation.
+* Quadrature also provides additional position transitions, increasing the usable resolution.
+
+---
+
+## Incremental Encoders
+* Incremental encoders provide information about relative motion.
+* They output pulses as the shaft moves.
+* The controller determines movement based on the pulses received.
+* Incremental encoders do not inherently know their absolute position after power is removed.
+
+### Power Loss
+* After a power cycle, the system may need to return to a known reference position.
+* This process is commonly called **homing**.
+
+### Best Applications
+* Simpler positioning systems.
+* Applications where the machine can safely establish a home position.
+
+---
+
+## Absolute Encoders
+* Absolute encoders provide information about the shaft's current position.
+* They can retain position information through a power cycle.
+
+### Single-Turn Absolute Encoder
+* Determines the shaft's current angular position.
+* Does not track how many complete revolutions occurred outside its single-turn range.
+
+### Multi-Turn Absolute Encoder
+* Determines the shaft's angular position.
+* Also tracks the number of complete revolutions.
+* May use technologies such as:
+  * Battery backup
+  * Supercapacitors
+  * Energy harvesting
+
+### Advantage
+* The system can retain position information even after power is removed.
+
+---
+
+## Encoder Feedback to a PLC
+
+### Typical Operation
+```text
+Mechanical Motion
+      ↓
+   Encoder
+      ↓
+Electrical Pulses
+      ↓
+PLC Input / High-Speed Counter
+      ↓
+  PLC Program
+      ↓
+Position / Speed / Direction
+```
+
+---
+
+## Encoder Application to Our Conveyor Project
+An encoder can provide feedback showing whether the conveyor is actually moving.
+
+### Current System
+```text
+PLC Commands Conveyor Motor
+      ↓
+Conveyor Motor
+      ↓
+Conveyor Should Move
+```
+* The PLC currently knows that it commanded the motor to run.
+* This does not necessarily prove that the conveyor is physically moving.
+
+### With Encoder Feedback
+```text
+PLC Commands Motor ON
+      ↓
+Conveyor Moves
+      ↓
+Encoder Produces Pulses
+      ↓
+PLC Receives Feedback
+      ↓
+Conveyor Movement Confirmed
+```
+
+### Detecting a Conveyor Fault
+The PLC can compare the motor command with encoder feedback. If the motor is commanded ON but no movement is detected for a specified period, the PLC can determine that a fault may exist.
+
+**Logic Flow:**
+```text
+Conveyor_Motor = TRUE  +  Encoder_Movement = FALSE
+                         ↓
+                  TON Fault Timer
+                         ↓
+                   Timer Expires
+                         ↓
+               Conveyor_Fault = TRUE
+                         ↓
+                   Conveyor Stops
+                         ↓
+                   HMI Alarm
+```
+
+**Possible causes could include:**
+* Conveyor jam
+* Broken belt
+* Mechanical failure
+* Drive problem
+* Motor/conveyor coupling failure
+
+---
+
+## What I Learned
+* What an encoder is and why it is used in industrial automation.
+* The difference between an encoder and a limit switch.
+* The difference between optical, magnetic, and capacitive encoder technologies.
+* The difference between linear and rotary encoders.
+* What PPI and PPR represent.
+* How encoder pulses can be used to determine distance.
+* How pulse frequency can be used to calculate speed.
+* How quadrature encoders determine direction.
+* The difference between incremental and absolute encoders.
+* Why incremental encoder systems may require homing after power loss.
+* How encoder feedback can be used by a PLC to verify actual conveyor movement.
+* How feedback can be used to detect a conveyor fault instead of manually activating a `Conveyor_Fault` BOOL.
+
+---
+
+## Key Concept
+
+> **A command tells the machine what it is supposed to do. Feedback tells the PLC what the machine is actually doing.**
+
+```text
+    Command
+       ↓
+ Motor / Drive
+       ↓
+Mechanical System
+       ↓
+Encoder Feedback
+       ↓
+      PLC
+       ↓
+Compare Expected vs Actual
+       ↓
+Normal Operation or Fault
+```
