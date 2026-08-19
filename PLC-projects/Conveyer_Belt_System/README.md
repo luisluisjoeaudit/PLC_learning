@@ -499,3 +499,145 @@ A more realistic control system can require:
 - All restart permissives to be satisfied.
 
 Only after these conditions are satisfied should normal operation resume.
+
+## Version 6 - Motor Temperature Monitoring and Alarm System
+
+### Objective
+
+Improve the conveyor automation system by replacing the previous manually activated motor overheat fault with a simulated motor temperature measurement. The PLC now evaluates the motor temperature and automatically generates a warning or fault when defined temperature limits are reached. The temperature conditions are also connected to the existing CODESYS alarm management and HMI system.
+
+---
+
+### Components Used
+
+#### Inputs / Simulated Process Values
+
+- Motor_Temperature (REAL) – Simulates the measured temperature of the conveyor motor.
+
+#### Internal Memory / Function Blocks
+
+- Motor_Temp_Warning (BOOL) – Becomes TRUE when the motor temperature reaches the warning threshold.
+- Motor_Overtemp_Fault (BOOL) – Becomes TRUE when the motor temperature reaches the overtemperature shutdown threshold.
+
+#### Existing Components Used
+
+- Conveyor_Motor – Conveyor motor output.
+- Conveyor_Run_Latch – Maintains the conveyor's running state.
+- CODESYS Alarm Management – Handles the warning and error conditions.
+- HMI Visualization – Displays the motor temperature and alarm information.
+
+---
+
+### Temperature Limits
+
+- Below 60°C – Normal operating condition.
+- 60°C or higher – High temperature warning.
+- 70°C or higher – Overtemperature fault and motor shutdown.
+
+---
+
+### Program Logic
+
+1. The simulated `Motor_Temperature` value represents the current motor temperature.
+2. When `Motor_Temperature` reaches 60°C, `Motor_Temp_Warning` becomes TRUE.
+3. `Motor_Temp_Warning` is connected to the existing CODESYS warning alarm.
+4. The HMI displays a motor temperature warning to the operator.
+5. When `Motor_Temperature` reaches 70°C, `Motor_Overtemp_Fault` becomes TRUE.
+6. `Motor_Overtemp_Fault` is used as an interlock to prevent the conveyor motor from operating.
+7. The existing CODESYS error alarm is triggered by `Motor_Overtemp_Fault`.
+8. The HMI displays an overtemperature error to the operator.
+9. The motor remains stopped while the overtemperature fault condition is active.
+10. The system was tested at different temperature values to verify that the warning and shutdown thresholds operated correctly.
+
+---
+
+### Example Operating Conditions
+
+```text
+25°C
+↓
+Normal Operation
+No Warning
+No Fault
+Motor Allowed to Run
+
+### Alarm Integration
+
+#### Warning Alarm
+
+- Condition: `Motor_Temp_Warning = TRUE`
+- Alarm Class: `Warning`
+- HMI Message: `Motor Temperature High`
+- Purpose: Warns the operator that the motor is approaching an abnormal temperature.
+
+#### Error Alarm
+
+- Condition: `Motor_Overtemp_Fault = TRUE`
+- Alarm Class: `Error`
+- HMI Message: `Motor Overtemperature - Motor Shutdown`
+- Purpose: Indicates that the motor has exceeded the permitted temperature and has been stopped.
+
+---
+
+### What I Learned
+
+- How to use a `REAL` variable to represent a continuously changing physical measurement.
+- How comparison logic can turn an analog-style measurement into BOOL conditions.
+- How a temperature threshold can automatically generate a PLC warning.
+- How a second temperature threshold can generate a shutdown fault.
+- How a process measurement can be used as a PLC interlock.
+- How existing CODESYS alarm management can be reused for new fault conditions.
+- How HMI alarms can display the results of PLC diagnostic logic.
+- The difference between a warning condition and a shutdown condition.
+- How testing different process values can verify PLC fault logic.
+
+---
+
+### Problems Encountered
+
+#### Problem 1 - Simulating Temperature
+
+Initially, the motor overheat condition was represented by a manually activated BOOL.
+
+**Solution:**
+
+I replaced the manual fault input with a `REAL` motor temperature value so that the PLC could determine whether the motor was overheating based on its measured temperature.
+
+#### Problem 2 - Connecting Temperature to the Existing Alarm System
+
+Initially, the new temperature logic was separate from the alarm system.
+
+**Solution:**
+
+I connected `Motor_Temp_Warning` to the existing warning alarm and `Motor_Overtemp_Fault` to the existing error alarm instead of creating a completely separate alarm system.
+
+#### Problem 3 - Connecting the Fault to Motor Shutdown
+
+The temperature measurement needed to do more than display a warning.
+
+**Solution:**
+
+The `Motor_Overtemp_Fault` condition was incorporated into the conveyor control logic as an interlock so that the motor cannot continue operating when the overtemperature condition is active.
+
+---
+
+### Reflection
+
+This version made the conveyor system significantly more realistic by replacing a manually activated motor fault with a simulated physical measurement. The PLC now determines when the motor temperature becomes abnormal and responds differently depending on the severity of the condition.
+
+The project now demonstrates a complete chain from a simulated process measurement to PLC decision-making, equipment protection, alarm generation, and HMI operator feedback.
+
+```text
+Motor Temperature
+        ↓
+PLC Comparison
+        ↓
+Warning / Fault Condition
+        ↓
+Interlock
+        ↓
+Motor Shutdown
+        ↓
+CODESYS Alarm Management
+        ↓
+HMI Operator Notification
